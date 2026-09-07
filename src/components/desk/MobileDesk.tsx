@@ -29,7 +29,11 @@ export function MobileDesk() {
         <p className="mb-4 font-display text-[22px] text-ink">Living Desk</p>
         <div
           className="mb-4 rounded-md bg-sticky p-4 font-hand text-[20px] text-graphite"
-          style={{ transform: "rotate(-2deg)", boxShadow: "var(--shadow-contact)" }}
+          style={{
+            transform: "rotate(-2deg)",
+            boxShadow: "var(--os-shadow-icon)",
+            border: "1px solid color-mix(in srgb, var(--os-graphite) 22%, transparent)",
+          }}
         >
           {LABELS.sticky}
         </div>
@@ -41,7 +45,7 @@ export function MobileDesk() {
             className="flex w-full items-center justify-between rounded-md bg-folder px-4 py-4 text-left"
             style={{
               boxShadow:
-                "var(--shadow-contact), inset 0 1px 0 rgb(255 255 255 / 55%), inset 0 0 0 1.5px color-mix(in srgb, var(--graphite) 55%, transparent)",
+                "var(--os-shadow-icon), inset 0 1px 0 rgb(255 255 255 / 55%), inset 0 0 0 1.5px color-mix(in srgb, var(--os-graphite) 55%, transparent)",
             }}
           >
             <span className="text-[14px] font-medium text-ink">{c.label}</span>

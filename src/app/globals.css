@@ -1,56 +1,61 @@
 @import "tailwindcss";
 
 :root {
-  --desk-oak: #c4a574;
-  --desk-oak-deep: #8b6914;
-  --desk-wash: color-mix(in srgb, var(--desk-oak-deep) 18%, transparent);
-  --lamp-warm: #f0c27a;
-  --lamp-core: #ffe6b0;
-  --scuff: rgb(90 60 30 / 18%);
-  --grain-opacity: 0.045;
-  --lamp-opacity: 0.55;
-  --vignette-opacity: 0.35;
-  --paper: #f7f1e8;
-  --paper-raised: #fbf7f0;
+  /* Art pack v2 OS skin */
+  --os-desktop: #e8dfd0;
+  --os-desktop-deep: #d9cfc0;
+  --os-wallpaper-tint: #f7f1e8;
+  --os-panel: #f7f1e8;
+  --os-panel-raised: #fbf7f0;
+  --os-panel-border: rgb(58 58 58 / 18%);
+  --os-ink: #1e3a5f;
+  --os-ink-muted: #4a5f78;
+  --os-graphite: #3a3a3a;
+  --os-accent: #c45c4a;
+  --os-accent-soft: color-mix(in srgb, var(--os-accent) 28%, transparent);
+  --os-focus: #1e3a5f;
+  --os-shadow-window: 0 2px 4px rgb(30 58 95 / 8%), 0 12px 32px rgb(30 40 50 / 14%);
+  --os-shadow-icon: 0 1px 2px rgb(30 40 50 / 10%);
+
+  /* Compatibility aliases — map legacy tokens → OS skin */
+  --paper: var(--os-panel);
+  --paper-raised: var(--os-panel-raised);
   --folder-cream: #efe6d6;
   --sticky-manila: #f5e6c8;
-  --ink: #1e3a5f;
-  --ink-muted: #4a5f78;
-  --graphite: #3a3a3a;
+  --ink: var(--os-ink);
+  --ink-muted: var(--os-ink-muted);
+  --graphite: var(--os-graphite);
   --graphite-soft: #6b6b6b;
-  --stamp-red: #c45c4a;
-  --stamp-red-soft: color-mix(in srgb, var(--stamp-red) 22%, transparent);
-  --tray-glow: color-mix(in srgb, var(--stamp-red) 48%, transparent);
-  --focus-ring: #1e3a5f;
-  /* Soft contact shadow onto plate */
-  --shadow-contact: 0 2px 6px rgb(30 20 10 / 18%);
-  --shadow-paper: 0 1px 2px rgb(30 58 95 / 8%), 0 8px 24px rgb(139 105 20 / 10%);
-  /* Slightly stronger so windows lift off wood */
-  --shadow-paper-lift: 0 2px 4px rgb(30 20 10 / 14%), 0 12px 32px rgb(30 20 10 / 22%),
-    0 1px 2px rgb(30 58 95 / 8%);
+  --stamp-red: var(--os-accent);
+  --stamp-red-soft: var(--os-accent-soft);
+  --tray-glow: color-mix(in srgb, var(--os-accent) 48%, transparent);
+  --focus-ring: var(--os-focus);
+  --shadow-contact: var(--os-shadow-icon);
+  --shadow-paper: var(--os-shadow-window);
+  --shadow-paper-lift: var(--os-shadow-window);
 }
 
 @theme inline {
-  --color-desk: var(--desk-oak);
-  --color-desk-deep: var(--desk-oak-deep);
-  --color-desk-wash: var(--desk-wash);
-  --color-paper: var(--paper);
-  --color-paper-raised: var(--paper-raised);
+  --color-desk: var(--os-desktop);
+  --color-desk-deep: var(--os-desktop-deep);
+  --color-desk-wash: var(--os-desktop);
+  --color-paper: var(--os-panel);
+  --color-paper-raised: var(--os-panel-raised);
   --color-folder: var(--folder-cream);
   --color-sticky: var(--sticky-manila);
-  --color-ink: var(--ink);
-  --color-ink-muted: var(--ink-muted);
-  --color-graphite: var(--graphite);
+  --color-ink: var(--os-ink);
+  --color-ink-muted: var(--os-ink-muted);
+  --color-graphite: var(--os-graphite);
   --color-graphite-soft: var(--graphite-soft);
-  --color-stamp: var(--stamp-red);
-  --color-stamp-soft: var(--stamp-red-soft);
+  --color-stamp: var(--os-accent);
+  --color-stamp-soft: var(--os-accent-soft);
   --color-tray-glow: var(--tray-glow);
-  --color-focus-ring: var(--focus-ring);
+  --color-focus-ring: var(--os-focus);
   --font-sans: var(--font-geist-sans);
   --font-serif: var(--font-source-serif);
   --font-display: var(--font-fraunces);
   --font-hand: var(--font-caveat);
-  --shadow-paper: var(--shadow-paper);
+  --shadow-paper: var(--os-shadow-window);
 }
 
 html,
@@ -59,21 +64,28 @@ body {
 }
 
 body {
-  background: var(--desk-oak-deep);
-  color: var(--ink);
+  background: var(--os-desktop-deep);
+  color: var(--os-ink);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   font-size: 14px;
   overflow: hidden;
 }
 
-/* --- Art pack v1: desk plate + overlays --- */
-.desk-root {
+/* --- Art pack v2: OS desktop wallpaper surface --- */
+.os-root {
   position: relative;
   isolation: isolate;
-  background: var(--desk-oak-deep); /* fallback before plate loads */
+  /* Fallback paper wash if wallpaper fails to load */
+  background:
+    radial-gradient(
+      ellipse 85% 70% at 50% 40%,
+      var(--os-wallpaper-tint) 0%,
+      var(--os-desktop) 55%,
+      var(--os-desktop-deep) 100%
+    );
 }
 
-.desk-plate {
+.os-wallpaper {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -85,46 +97,27 @@ body {
   user-select: none;
 }
 
-.desk-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* 1) Paper/film grain — static tiled PNG */
-.desk-overlay.grain {
-  opacity: var(--grain-opacity);
-  mix-blend-mode: soft-light;
-  background-image: url("/desk/grain-tile.png");
-  background-size: 180px 180px;
-}
-
-/* 2) Afternoon lamp wash — reinforce plate light from upper-left */
-.desk-overlay.lamp-wash {
-  opacity: var(--lamp-opacity);
+/* Legacy class aliases kept for hydration fallbacks / non-desk routes */
+.desk-root {
+  position: relative;
+  isolation: isolate;
   background:
     radial-gradient(
-      ellipse 70% 55% at 12% 8%,
-      color-mix(in srgb, var(--lamp-core) 70%, transparent) 0%,
-      color-mix(in srgb, var(--lamp-warm) 35%, transparent) 35%,
-      transparent 70%
-    ),
-    radial-gradient(ellipse 90% 80% at 70% 100%, rgb(40 25 10 / 28%) 0%, transparent 55%);
-  mix-blend-mode: soft-light;
+      ellipse 85% 70% at 50% 40%,
+      var(--os-wallpaper-tint) 0%,
+      var(--os-desktop) 55%,
+      var(--os-desktop-deep) 100%
+    );
 }
 
-/* 3) Soft vignette + scuff wash */
-.desk-overlay.scuffs {
-  opacity: var(--vignette-opacity);
-  background: radial-gradient(ellipse at center, transparent 55%, rgb(30 20 10 / 35%) 100%);
-}
-
-/* Legacy wash for non-desk routes (e.g. /work/*) */
 .desk-wash {
   background:
-    linear-gradient(180deg, var(--desk-wash), transparent 55%),
-    var(--desk-oak);
+    radial-gradient(
+      ellipse 85% 70% at 50% 30%,
+      var(--os-wallpaper-tint) 0%,
+      var(--os-desktop) 60%,
+      var(--os-desktop-deep) 100%
+    );
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -140,7 +133,7 @@ body {
 .case-prose h2 {
   font-family: var(--font-fraunces), serif;
   font-size: 1.35rem;
-  color: var(--ink);
+  color: var(--os-ink);
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
 }
@@ -149,12 +142,12 @@ body {
   font-family: var(--font-source-serif), Georgia, serif;
   font-size: 17px;
   line-height: 1.55;
-  color: var(--ink);
+  color: var(--os-ink);
   margin-bottom: 0.85rem;
 }
 
 .case-prose a {
-  color: var(--stamp-red);
+  color: var(--os-accent);
   text-decoration: underline;
   text-underline-offset: 2px;
 }

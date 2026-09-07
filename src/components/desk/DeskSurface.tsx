@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-/** Art pack v1 desk plane: plate + grain / lamp-wash / scuff overlays. */
+/** Art pack v2 OS desktop surface: wallpaper + icons/windows/tray. */
 export function DeskSurface({
   className,
   children,
@@ -9,17 +9,14 @@ export function DeskSurface({
   children?: ReactNode;
 }) {
   return (
-    <div className={["desk-root", className].filter(Boolean).join(" ")}>
+    <div className={["os-root", className].filter(Boolean).join(" ")}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        className="desk-plate"
-        src="/desk/living-desk-plate-v1.png"
+        className="os-wallpaper"
+        src="/desktop/living-os-wallpaper-v2.png"
         alt=""
         draggable={false}
       />
-      <div className="desk-overlay grain" aria-hidden />
-      <div className="desk-overlay lamp-wash" aria-hidden />
-      <div className="desk-overlay scuffs" aria-hidden />
       {children}
     </div>
   );

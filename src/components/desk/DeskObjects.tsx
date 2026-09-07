@@ -5,6 +5,9 @@ import { CSS } from "@dnd-kit/utilities";
 import { LABELS } from "@/lib/labels";
 import { openDeskObject } from "@/store/windowStore";
 
+const iconOutline =
+  "inset 0 1px 0 rgb(255 255 255 / 70%), inset 0 0 0 1.5px color-mix(in srgb, var(--os-graphite) 70%, transparent)";
+
 export function FolderObject({
   id,
   label,
@@ -23,20 +26,20 @@ export function FolderObject({
       aria-label={label}
     >
       <div className="relative h-[72px] w-[80px] transition-transform group-hover:-translate-y-0.5">
+        {/* Folder tab */}
         <div
-          className="absolute left-1 top-0 h-3 w-10 rounded-t-sm bg-folder"
+          className="absolute left-1 top-0 h-3 w-10 rounded-t-sm"
           style={{
-            background: "#efe6d6",
-            boxShadow:
-              "inset 0 1px 0 rgb(255 255 255 / 65%), inset 0 0 0 1.5px color-mix(in srgb, var(--graphite) 65%, transparent)",
+            background: "var(--folder-cream)",
+            boxShadow: iconOutline,
           }}
         />
+        {/* Cream tile body + graphite outline + OS icon shadow */}
         <div
-          className="absolute inset-x-0 bottom-0 top-2 rounded-sm bg-folder"
+          className="absolute inset-x-0 bottom-0 top-2 rounded-sm"
           style={{
-            background: "#efe6d6",
-            boxShadow:
-              "var(--shadow-contact), inset 0 1px 0 rgb(255 255 255 / 65%), inset 0 0 0 1.75px color-mix(in srgb, var(--graphite) 65%, transparent)",
+            background: "var(--folder-cream)",
+            boxShadow: `var(--os-shadow-icon), ${iconOutline}`,
           }}
         />
         <div className="absolute inset-x-2 bottom-2 top-5 rounded-[2px] bg-paper-raised/45" />
@@ -80,25 +83,27 @@ export function ProjectFile({
       {...attributes}
     >
       <div
-        className="relative h-[88px] w-[72px] bg-paper"
+        className="relative h-[88px] w-[72px]"
         style={{
-          boxShadow: "var(--shadow-contact)",
-          border: "1px solid color-mix(in srgb, var(--graphite) 18%, transparent)",
+          background: "var(--os-panel)",
+          boxShadow: "var(--os-shadow-icon)",
+          border: "1.5px solid color-mix(in srgb, var(--os-graphite) 55%, transparent)",
         }}
       >
         {/* Stamp-red tab */}
         <div
           className="absolute -left-px top-3 h-5 w-[7px] rounded-r-[1px]"
-          style={{ background: "var(--stamp-red)" }}
+          style={{ background: "var(--os-accent)" }}
           aria-hidden
         />
         {/* Folded corner */}
         <div
-          className="absolute right-0 top-0 h-4 w-4 bg-folder"
+          className="absolute right-0 top-0 h-4 w-4"
           style={{
+            background: "var(--folder-cream)",
             clipPath: "polygon(0 0, 100% 100%, 0 100%)",
             transform: "rotate(180deg)",
-            boxShadow: "inset 0 0 0 1px color-mix(in srgb, var(--graphite) 20%, transparent)",
+            boxShadow: "inset 0 0 0 1px color-mix(in srgb, var(--os-graphite) 20%, transparent)",
           }}
         />
         <div className="absolute inset-x-2 top-5 space-y-1.5">
@@ -117,12 +122,13 @@ export function ProjectFile({
 export function StickyNote({ style }: { style?: React.CSSProperties }) {
   return (
     <div
-      className="absolute z-[2] flex h-[96px] w-[120px] items-center justify-center bg-sticky p-3 text-center"
+      className="absolute z-[2] flex h-[96px] w-[120px] items-center justify-center p-3 text-center"
       style={{
         ...style,
-        background: "#f5e6c8",
+        background: "var(--sticky-manila)",
         transform: `${style?.transform ?? ""} rotate(-2deg)`.trim(),
-        boxShadow: "var(--shadow-contact)",
+        boxShadow: "var(--os-shadow-icon)",
+        border: "1px solid color-mix(in srgb, var(--os-graphite) 22%, transparent)",
       }}
       aria-label={LABELS.sticky}
     >

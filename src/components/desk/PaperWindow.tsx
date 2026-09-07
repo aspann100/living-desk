@@ -71,8 +71,8 @@ export function PaperWindow({ win, children, width = 420, height = 480 }: Props)
         height,
         maxHeight: "min(520px, calc(100vh - 80px))",
         zIndex: win.zIndex,
-        boxShadow: "var(--shadow-paper-lift)",
-        border: "1px solid color-mix(in srgb, var(--graphite) 18%, transparent)",
+        boxShadow: "var(--os-shadow-window)",
+        border: "1px solid var(--os-panel-border)",
       }}
       initial={instant ? false : { opacity: 0, scale: 0.96, y: 6 }}
       animate={
@@ -87,8 +87,8 @@ export function PaperWindow({ win, children, width = 420, height = 480 }: Props)
       <div
         className="relative flex h-10 shrink-0 cursor-grab items-stretch active:cursor-grabbing"
         style={{
-          background: "color-mix(in srgb, var(--paper) 80%, var(--folder-cream))",
-          borderBottom: "1px solid color-mix(in srgb, var(--graphite) 12%, transparent)",
+          background: "color-mix(in srgb, var(--os-panel) 80%, var(--folder-cream))",
+          borderBottom: "1px solid color-mix(in srgb, var(--os-graphite) 12%, transparent)",
         }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
@@ -98,12 +98,12 @@ export function PaperWindow({ win, children, width = 420, height = 480 }: Props)
           className="relative z-[1] ml-2 mt-[3px] flex min-w-0 flex-1 items-center rounded-t-md px-3"
           style={{
             background:
-              "linear-gradient(180deg, var(--paper-raised), color-mix(in srgb, var(--paper-raised) 65%, var(--folder-cream)))",
+              "linear-gradient(180deg, var(--os-panel-raised), color-mix(in srgb, var(--os-panel-raised) 65%, var(--folder-cream)))",
             boxShadow:
               "inset 0 1px 0 rgb(255 255 255 / 75%), 0 2px 4px rgb(30 58 95 / 6%)",
-            borderLeft: "1px solid color-mix(in srgb, var(--graphite) 14%, transparent)",
-            borderRight: "1px solid color-mix(in srgb, var(--graphite) 14%, transparent)",
-            borderTop: "1px solid color-mix(in srgb, var(--graphite) 14%, transparent)",
+            borderLeft: "1px solid color-mix(in srgb, var(--os-graphite) 14%, transparent)",
+            borderRight: "1px solid color-mix(in srgb, var(--os-graphite) 14%, transparent)",
+            borderTop: "1px solid color-mix(in srgb, var(--os-graphite) 14%, transparent)",
           }}
         >
           <span

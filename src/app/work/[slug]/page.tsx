@@ -52,8 +52,8 @@ export default async function CasePage({
         <article
           className="case-prose mt-6 rounded-md bg-paper p-6 sm:p-8"
           style={{
-            boxShadow: "var(--shadow-paper)",
-            border: "1px solid color-mix(in srgb, var(--graphite) 14%, transparent)",
+            boxShadow: "var(--os-shadow-window)",
+            border: "1px solid var(--os-panel-border)",
           }}
         >
           <header className="mb-6 border-b border-graphite/10 pb-4">

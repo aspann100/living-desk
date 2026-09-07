@@ -26,18 +26,18 @@ export function InterviewTray() {
 
   const glow =
     phase === "idle"
-      ? "0 0 0 1px var(--stamp-red), 0 0 0 2.5px color-mix(in srgb, var(--stamp-red) 55%, transparent), 0 0 18px var(--tray-glow)"
+      ? "0 0 0 1px var(--os-accent), 0 0 0 2.5px color-mix(in srgb, var(--os-accent) 55%, transparent), 0 0 18px var(--tray-glow)"
       : phase === "armed" || isOver
-        ? "0 0 0 1px var(--stamp-red), 0 0 0 3px var(--stamp-red), 0 0 22px var(--tray-glow)"
-        : "0 0 0 1px var(--stamp-red), 0 0 0 2.5px color-mix(in srgb, var(--stamp-red) 70%, transparent), 0 0 18px var(--tray-glow)";
+        ? "0 0 0 1px var(--os-accent), 0 0 0 3px var(--os-accent), 0 0 22px var(--tray-glow)"
+        : "0 0 0 1px var(--os-accent), 0 0 0 2.5px color-mix(in srgb, var(--os-accent) 70%, transparent), 0 0 18px var(--tray-glow)";
 
   return (
     <motion.div
       ref={setNodeRef}
       className="absolute bottom-4 left-1/2 z-[5] w-[min(320px,90vw)] -translate-x-1/2 rounded-md bg-paper-raised px-4 py-3"
       style={{
-        boxShadow: `var(--shadow-contact), ${glow}`,
-        border: "2px solid color-mix(in srgb, var(--stamp-red) 72%, transparent)",
+        boxShadow: `var(--os-shadow-window), ${glow}`,
+        border: "2px solid color-mix(in srgb, var(--os-accent) 72%, transparent)",
       }}
       animate={
         shaking && !reduce
@@ -54,7 +54,10 @@ export function InterviewTray() {
         </div>
         <div
           className="h-8 w-8 shrink-0 rounded-full"
-          style={{ background: "var(--stamp-red-soft)", boxShadow: "inset 0 0 0 2px var(--stamp-red)" }}
+          style={{
+            background: "var(--os-accent-soft)",
+            boxShadow: "inset 0 0 0 2px var(--os-accent)",
+          }}
           aria-hidden
         />
       </div>
