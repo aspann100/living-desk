@@ -25,6 +25,14 @@ import {
 import { useWindowStore } from "@/store/windowStore";
 import { useTrayStore } from "@/store/trayStore";
 
+function isTypingTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false;
+  const tag = target.tagName;
+  if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
+  if (target.isContentEditable) return true;
+  return Boolean(target.closest("[contenteditable='true']"));
+}
+
 function WindowLayer() {
   const windows = useWindowStore((s) => s.windows);
 
@@ -53,6 +61,7 @@ function DesktopDesk() {
   const searchParams = useSearchParams();
   const openBySlug = useWindowStore((s) => s.openBySlug);
   const closeFocused = useWindowStore((s) => s.closeFocused);
+  const cycleFocus = useWindowStore((s) => s.cycleFocus);
   const setTrayPhase = useTrayStore((s) => s.setPhase);
   const accept = useTrayStore((s) => s.accept);
   const shake = useTrayStore((s) => s.shake);
@@ -68,11 +77,38 @@ function DesktopDesk() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeFocused();
+      if (e.key === "Escape") {
+        closeFocused();
+        return;
+      }
+
+      // ⌘W / Ctrl+W — close focused when not typing
+      if ((e.key === "w" || e.key === "W") && (e.metaKey || e.ctrlKey)) {
+        if (isTypingTarget(e.target)) return;
+        e.preventDefault();
+        closeFocused();
+        return;
+      }
+
+      // Tab / Shift+Tab — cycle focus among open non-minimized windows
+      if (e.key === "Tab") {
+        if (isTypingTarget(e.target)) return;
+        const openCount = useWindowStore
+          .getState()
+          .windows.filter(
+            (w) =>
+              w.phase === "open" ||
+              w.phase === "focused" ||
+              w.phase === "opening"
+          ).length;
+        if (openCount === 0) return;
+        e.preventDefault();
+        cycleFocus(e.shiftKey ? -1 : 1);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [closeFocused]);
+  }, [closeFocused, cycleFocus]);
 
   const onDragStart = useCallback(
     (e: DragStartEvent) => {

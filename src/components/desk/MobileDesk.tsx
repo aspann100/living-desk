@@ -84,7 +84,11 @@ export function MobileDesk() {
               </button>
             </div>
             <div className="flex-1 overflow-y-auto p-4">
-              {sheet === "work" && <WorkFolderBody />}
+              {sheet === "work" && (
+                <WorkFolderBody
+                  onOpenCase={(slug) => setSheet(slug as Sheet)}
+                />
+              )}
               {sheet === "experiments" && <ExperimentsFolderBody />}
               {sheet === "about" && <AboutBody />}
               {sheet === "warm-intake" && <CaseBody slug="warm-intake" />}

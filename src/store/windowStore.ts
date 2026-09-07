@@ -33,6 +33,7 @@ type WindowState = {
   setPhase: (id: string, phase: WindowPhase) => void;
   moveWindow: (id: string, x: number, y: number) => void;
   closeFocused: () => void;
+  cycleFocus: (direction?: 1 | -1) => void;
   openBySlug: (slug: string) => void;
   getFocused: () => DeskWindow | undefined;
 };
@@ -174,6 +175,26 @@ export const useWindowStore = create<WindowState>()(
       closeFocused: () => {
         const focused = get().getFocused();
         if (focused) get().closeWindow(focused.id);
+      },
+
+      cycleFocus: (direction = 1) => {
+        const open = get()
+          .windows.filter(
+            (w) =>
+              w.phase === "open" ||
+              w.phase === "focused" ||
+              w.phase === "opening"
+          )
+          .sort((a, b) => a.zIndex - b.zIndex);
+        if (!open.length) return;
+        if (open.length === 1) {
+          get().focusWindow(open[0].id);
+          return;
+        }
+        const focused = get().getFocused();
+        const idx = focused ? open.findIndex((w) => w.id === focused.id) : -1;
+        const next = open[(idx + direction + open.length) % open.length];
+        get().focusWindow(next.id);
       },
 
       openBySlug: (slug) => {

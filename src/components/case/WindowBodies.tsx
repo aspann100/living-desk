@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { LABELS } from "@/lib/labels";
 import { getCase } from "@/lib/cases";
+import { openDeskObject } from "@/store/windowStore";
+import { CaseMdxRemote } from "@/components/case/CaseMdxRemote";
+import { useCaseMdxSource } from "@/components/case/CaseMdxProvider";
 
 export function AboutBody() {
   return (
@@ -20,21 +23,30 @@ export function AboutBody() {
   );
 }
 
-export function WorkFolderBody() {
+export function WorkFolderBody({
+  onOpenCase,
+}: {
+  /** Mobile sheet: switch to case without leaving `/`. */
+  onOpenCase?: (slug: string) => void;
+}) {
   const c = getCase("warm-intake")!;
   return (
     <div className="space-y-3">
       <p className="text-[13px] text-ink-muted">Projects on this desk</p>
-      <Link
-        href="/work/warm-intake"
-        className="block rounded-md border border-graphite/10 bg-paper-raised px-3 py-3 transition hover:border-stamp/30"
+      <button
+        type="button"
+        onClick={() => {
+          openDeskObject("warm-intake");
+          onOpenCase?.("warm-intake");
+        }}
+        className="block w-full rounded-md border border-graphite/10 bg-paper-raised px-3 py-3 text-left transition hover:border-stamp/30"
       >
         <p className="font-display text-[18px] text-ink">{c.title}</p>
         <p className="mt-1 font-serif text-[15px] leading-snug text-ink-muted">{c.summary}</p>
         <p className="mt-2 text-[12px] text-graphite-soft">
           {c.year} · {c.role}
         </p>
-      </Link>
+      </button>
     </div>
   );
 }
@@ -52,6 +64,7 @@ export function ExperimentsFolderBody() {
 
 export function CaseBody({ slug }: { slug: string }) {
   const meta = getCase(slug);
+  const mdxSource = useCaseMdxSource(slug);
   if (!meta) {
     return <p className="text-ink-muted">Case not found.</p>;
   }
@@ -64,41 +77,17 @@ export function CaseBody({ slug }: { slug: string }) {
           {meta.year} · {meta.role}
         </p>
       </header>
-      <WarmIntakeInline />
+      {mdxSource ? (
+        <CaseMdxRemote source={mdxSource} />
+      ) : (
+        <p className="text-ink-muted">Loading case…</p>
+      )}
+      <p className="!mt-4 !text-[13px] !text-ink-muted">{LABELS.contact}</p>
       <p className="mt-4 text-[13px]">
         <Link href={`/work/${slug}`} className="text-stamp underline-offset-2 hover:underline">
           Open full case →
         </Link>
       </p>
     </article>
-  );
-}
-
-function WarmIntakeInline() {
-  return (
-    <>
-      <h2>Problem</h2>
-      <p>
-        Hiring flows often feel like forms — cold, linear, forgettable. Candidates jump through
-        fields while the story of the work stays buried. We needed an intake that felt like sitting
-        down at a desk: warm paper, clear folders, and a path into the work itself.
-      </p>
-      <h2>Approach</h2>
-      <p>
-        Treat the portfolio as a physical desk. Folders open into paper windows. A project file can
-        be dropped into an Interview tray to become a guided walkthrough. Motion stays springy and
-        brief; chrome stays graphite — never traffic-light kitsch. Copy stays short and human.
-      </p>
-      {/* TODO(amazon): Aj-approved Amazon case notes only */}
-      <h2>Outcome</h2>
-      <p>
-        A desk that opens with oak wash and grain, where Work/, Experiments/, and About/ are real
-        objects. Warm Intake opens as a case window; dropping it on the Interview tray starts the
-        walkthrough. On mobile, folders become full-screen sheets with a sticky Send to Interview
-        CTA — not a shrunk desktop.
-      </p>
-      {/* TODO(aj-disclosure): Aj-approved wording only */}
-      <p className="!mt-4 !text-[13px] !text-ink-muted">{LABELS.contact}</p>
-    </>
   );
 }
