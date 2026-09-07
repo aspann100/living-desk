@@ -38,7 +38,10 @@ export function MobileDesk() {
             type="button"
             onClick={() => setSheet(c.id)}
             className="flex w-full items-center justify-between rounded-md bg-folder px-4 py-4 text-left"
-            style={{ boxShadow: "var(--shadow-paper)" }}
+            style={{
+              boxShadow:
+                "var(--shadow-paper), inset 0 0 0 1.5px color-mix(in srgb, var(--graphite) 55%, transparent)",
+            }}
           >
             <span className="text-[14px] font-medium text-ink">{c.label}</span>
             <span className="text-ink-muted">→</span>

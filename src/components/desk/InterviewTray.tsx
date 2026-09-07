@@ -26,10 +26,10 @@ export function InterviewTray() {
 
   const glow =
     phase === "idle"
-      ? "0 0 0 2px var(--tray-glow)"
+      ? "0 0 0 2px color-mix(in srgb, var(--stamp-red) 70%, transparent), 0 0 14px var(--tray-glow)"
       : phase === "armed" || isOver
-        ? "0 0 0 3px var(--stamp-red), 0 0 18px var(--tray-glow)"
-        : "0 0 0 2px var(--stamp-red-soft)";
+        ? "0 0 0 3px var(--stamp-red), 0 0 22px var(--tray-glow)"
+        : "0 0 0 2px var(--stamp-red), 0 0 12px var(--tray-glow)";
 
   return (
     <motion.div
@@ -37,7 +37,7 @@ export function InterviewTray() {
       className="absolute bottom-4 left-1/2 z-[5] w-[min(320px,90vw)] -translate-x-1/2 rounded-md bg-paper-raised px-4 py-3"
       style={{
         boxShadow: `var(--shadow-paper), ${glow}`,
-        border: "1px solid color-mix(in srgb, var(--stamp-red) 28%, transparent)",
+        border: "1.5px solid color-mix(in srgb, var(--stamp-red) 42%, transparent)",
       }}
       animate={
         shaking && !reduce

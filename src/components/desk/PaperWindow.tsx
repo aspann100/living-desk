@@ -83,21 +83,38 @@ export function PaperWindow({ win, children, width = 420, height = 480 }: Props)
       transition={instant ? { duration: 0 } : { ...spring, duration: 0.28 }}
       onMouseDown={() => focusWindow(win.id)}
     >
-      {/* Paper tab title bar = drag handle */}
+      {/* Paper tab title bar = drag handle (raised paper tab, not a plain strip) */}
       <div
-        className="flex h-9 shrink-0 cursor-grab items-center justify-between border-b border-graphite/10 bg-paper-raised px-3 active:cursor-grabbing"
+        className="relative flex h-10 shrink-0 cursor-grab items-stretch active:cursor-grabbing"
+        style={{
+          background: "color-mix(in srgb, var(--paper) 80%, var(--folder-cream))",
+          borderBottom: "1px solid color-mix(in srgb, var(--graphite) 12%, transparent)",
+        }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
       >
-        <span
-          className={`truncate text-[13px] font-medium ${
-            focused ? "text-ink" : "text-ink-muted"
-          }`}
+        <div
+          className="relative z-[1] ml-2 mt-[3px] flex min-w-0 flex-1 items-center rounded-t-md px-3"
+          style={{
+            background:
+              "linear-gradient(180deg, var(--paper-raised), color-mix(in srgb, var(--paper-raised) 65%, var(--folder-cream)))",
+            boxShadow:
+              "inset 0 1px 0 rgb(255 255 255 / 75%), 0 2px 4px rgb(30 58 95 / 6%)",
+            borderLeft: "1px solid color-mix(in srgb, var(--graphite) 14%, transparent)",
+            borderRight: "1px solid color-mix(in srgb, var(--graphite) 14%, transparent)",
+            borderTop: "1px solid color-mix(in srgb, var(--graphite) 14%, transparent)",
+          }}
         >
-          {win.title}
-        </span>
-        <div className="flex items-center gap-1">
+          <span
+            className={`truncate text-[13px] font-medium ${
+              focused ? "text-ink" : "text-ink-muted"
+            }`}
+          >
+            {win.title}
+          </span>
+        </div>
+        <div className="flex shrink-0 items-center gap-1 px-2">
           <button
             type="button"
             data-chrome-btn

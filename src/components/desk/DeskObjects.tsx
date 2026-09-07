@@ -23,12 +23,20 @@ export function FolderObject({
       aria-label={label}
     >
       <div className="relative h-[72px] w-[80px] transition-transform group-hover:-translate-y-0.5">
-        <div className="absolute left-1 top-0 h-3 w-10 rounded-t-sm bg-folder shadow-sm" />
+        <div
+          className="absolute left-1 top-0 h-3 w-10 rounded-t-sm bg-folder"
+          style={{
+            boxShadow: "inset 0 0 0 1.5px color-mix(in srgb, var(--graphite) 55%, transparent)",
+          }}
+        />
         <div
           className="absolute inset-x-0 bottom-0 top-2 rounded-sm bg-folder"
-          style={{ boxShadow: "var(--shadow-paper)" }}
+          style={{
+            boxShadow:
+              "var(--shadow-paper), inset 0 0 0 1.5px color-mix(in srgb, var(--graphite) 55%, transparent)",
+          }}
         />
-        <div className="absolute inset-x-2 bottom-2 top-5 rounded-[2px] bg-paper-raised/60" />
+        <div className="absolute inset-x-2 bottom-2 top-5 rounded-[2px] bg-paper-raised/45" />
       </div>
       <span className="max-w-[96px] truncate text-center text-[13px] font-medium text-ink">
         {label}
