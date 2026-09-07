@@ -118,8 +118,8 @@ export const useWindowStore = create<WindowState>()(
           slug: partial.slug,
           phase: "opening",
           zIndex: z,
-          x: partial.x ?? 80 + (z % 5) * 28,
-          y: partial.y ?? 60 + (z % 5) * 24,
+          x: partial.x ?? 72 + (z % 5) * 56,
+          y: partial.y ?? 48 + (z % 5) * 44,
         };
 
         set({

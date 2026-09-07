@@ -26,23 +26,29 @@ export function FolderObject({
       aria-label={label}
     >
       <div className="relative h-[72px] w-[80px] transition-transform group-hover:-translate-y-0.5">
-        {/* Folder tab */}
+        {/* App/folder tile — tabbed cream (distinct from document sheet) */}
         <div
-          className="absolute left-1 top-0 h-3 w-10 rounded-t-sm"
+          className="absolute left-1 top-0 h-3.5 w-11 rounded-t-sm"
           style={{
             background: "var(--folder-cream)",
             boxShadow: iconOutline,
           }}
         />
-        {/* Cream tile body + graphite outline + OS icon shadow */}
         <div
-          className="absolute inset-x-0 bottom-0 top-2 rounded-sm"
+          className="absolute inset-x-0 bottom-0 top-2.5 rounded-sm"
           style={{
             background: "var(--folder-cream)",
             boxShadow: `var(--os-shadow-icon), ${iconOutline}`,
           }}
         />
-        <div className="absolute inset-x-2 bottom-2 top-5 rounded-[2px] bg-paper-raised/45" />
+        {/* Inner pocket cue */}
+        <div
+          className="absolute inset-x-2 bottom-2.5 top-6 rounded-[2px]"
+          style={{
+            background: "color-mix(in srgb, var(--os-panel-raised) 70%, transparent)",
+            borderTop: "1px solid color-mix(in srgb, var(--os-graphite) 12%, transparent)",
+          }}
+        />
       </div>
       <span className="max-w-[96px] truncate text-center text-[13px] font-medium text-ink">
         {label}
@@ -82,34 +88,35 @@ export function ProjectFile({
       {...listeners}
       {...attributes}
     >
+      {/* Document app icon — taller paper sheet (not a cream folder tile) */}
       <div
-        className="relative h-[88px] w-[72px]"
+        className="relative h-[92px] w-[64px] rounded-[2px]"
         style={{
-          background: "var(--os-panel)",
+          background: "var(--os-panel-raised)",
           boxShadow: "var(--os-shadow-icon)",
           border: "1.5px solid color-mix(in srgb, var(--os-graphite) 55%, transparent)",
         }}
       >
-        {/* Stamp-red tab */}
+        {/* Stamp-red accent tab */}
         <div
-          className="absolute -left-px top-3 h-5 w-[7px] rounded-r-[1px]"
+          className="absolute -left-px top-3 h-6 w-[8px] rounded-r-[1px]"
           style={{ background: "var(--os-accent)" }}
           aria-hidden
         />
-        {/* Folded corner */}
+        {/* Folded corner — document dog-ear */}
         <div
-          className="absolute right-0 top-0 h-4 w-4"
+          className="absolute right-0 top-0 h-5 w-5"
           style={{
-            background: "var(--folder-cream)",
-            clipPath: "polygon(0 0, 100% 100%, 0 100%)",
-            transform: "rotate(180deg)",
-            boxShadow: "inset 0 0 0 1px color-mix(in srgb, var(--os-graphite) 20%, transparent)",
+            background:
+              "linear-gradient(135deg, transparent 50%, color-mix(in srgb, var(--os-desktop-deep) 80%, white) 50%)",
+            boxShadow: "inset 1px -1px 0 color-mix(in srgb, var(--os-graphite) 25%, transparent)",
           }}
         />
-        <div className="absolute inset-x-2 top-5 space-y-1.5">
-          <div className="h-1 rounded bg-ink/15" />
-          <div className="h-1 w-[80%] rounded bg-ink/10" />
-          <div className="h-1 w-[60%] rounded bg-ink/10" />
+        <div className="absolute inset-x-2.5 top-7 space-y-1.5">
+          <div className="h-[3px] rounded-sm bg-ink/20" />
+          <div className="h-[3px] w-[85%] rounded-sm bg-ink/14" />
+          <div className="h-[3px] w-[70%] rounded-sm bg-ink/14" />
+          <div className="h-[3px] w-[55%] rounded-sm bg-ink/10" />
         </div>
       </div>
       <span className="max-w-[110px] text-center text-[12px] font-medium leading-tight text-ink">
