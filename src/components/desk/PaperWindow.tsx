@@ -71,7 +71,7 @@ export function PaperWindow({ win, children, width = 420, height = 480 }: Props)
         height,
         maxHeight: "min(520px, calc(100vh - 80px))",
         zIndex: win.zIndex,
-        boxShadow: "var(--shadow-paper)",
+        boxShadow: "var(--shadow-paper-lift)",
         border: "1px solid color-mix(in srgb, var(--graphite) 18%, transparent)",
       }}
       initial={instant ? false : { opacity: 0, scale: 0.96, y: 6 }}

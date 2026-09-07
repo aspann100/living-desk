@@ -9,8 +9,8 @@ export default async function Home() {
 
   return (
     <CaseMdxProvider sources={caseMdxSources}>
-      <HydrationGate fallback={<div className="min-h-[100dvh] desk-wash desk-grain" />}>
-        <Suspense fallback={<div className="min-h-[100dvh] desk-wash" />}>
+      <HydrationGate fallback={<div className="desk-root min-h-[100dvh]" />}>
+        <Suspense fallback={<div className="desk-root min-h-[100dvh]" />}>
           <Desk />
         </Suspense>
       </HydrationGate>

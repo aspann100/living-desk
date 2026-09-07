@@ -26,14 +26,17 @@ export function FolderObject({
         <div
           className="absolute left-1 top-0 h-3 w-10 rounded-t-sm bg-folder"
           style={{
-            boxShadow: "inset 0 0 0 1.5px color-mix(in srgb, var(--graphite) 55%, transparent)",
+            background: "#efe6d6",
+            boxShadow:
+              "inset 0 1px 0 rgb(255 255 255 / 65%), inset 0 0 0 1.5px color-mix(in srgb, var(--graphite) 65%, transparent)",
           }}
         />
         <div
           className="absolute inset-x-0 bottom-0 top-2 rounded-sm bg-folder"
           style={{
+            background: "#efe6d6",
             boxShadow:
-              "var(--shadow-paper), inset 0 0 0 1.5px color-mix(in srgb, var(--graphite) 55%, transparent)",
+              "var(--shadow-contact), inset 0 1px 0 rgb(255 255 255 / 65%), inset 0 0 0 1.75px color-mix(in srgb, var(--graphite) 65%, transparent)",
           }}
         />
         <div className="absolute inset-x-2 bottom-2 top-5 rounded-[2px] bg-paper-raised/45" />
@@ -79,16 +82,23 @@ export function ProjectFile({
       <div
         className="relative h-[88px] w-[72px] bg-paper"
         style={{
-          boxShadow: "var(--shadow-paper)",
-          border: "1px solid color-mix(in srgb, var(--graphite) 14%, transparent)",
+          boxShadow: "var(--shadow-contact)",
+          border: "1px solid color-mix(in srgb, var(--graphite) 18%, transparent)",
         }}
       >
+        {/* Stamp-red tab */}
+        <div
+          className="absolute -left-px top-3 h-5 w-[7px] rounded-r-[1px]"
+          style={{ background: "var(--stamp-red)" }}
+          aria-hidden
+        />
         {/* Folded corner */}
         <div
           className="absolute right-0 top-0 h-4 w-4 bg-folder"
           style={{
             clipPath: "polygon(0 0, 100% 100%, 0 100%)",
             transform: "rotate(180deg)",
+            boxShadow: "inset 0 0 0 1px color-mix(in srgb, var(--graphite) 20%, transparent)",
           }}
         />
         <div className="absolute inset-x-2 top-5 space-y-1.5">
@@ -110,8 +120,9 @@ export function StickyNote({ style }: { style?: React.CSSProperties }) {
       className="absolute z-[2] flex h-[96px] w-[120px] items-center justify-center bg-sticky p-3 text-center"
       style={{
         ...style,
+        background: "#f5e6c8",
         transform: `${style?.transform ?? ""} rotate(-2deg)`.trim(),
-        boxShadow: "var(--shadow-paper)",
+        boxShadow: "var(--shadow-contact)",
       }}
       aria-label={LABELS.sticky}
     >

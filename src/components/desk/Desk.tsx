@@ -16,6 +16,7 @@ import { DeskObjects, ProjectFile } from "@/components/desk/DeskObjects";
 import { InterviewTray } from "@/components/desk/InterviewTray";
 import { PaperWindow } from "@/components/desk/PaperWindow";
 import { MobileDesk } from "@/components/desk/MobileDesk";
+import { DeskSurface } from "@/components/desk/DeskSurface";
 import {
   AboutBody,
   WorkFolderBody,
@@ -162,13 +163,13 @@ function DesktopDesk() {
       onDragEnd={onDragEnd}
       onDragCancel={onDragCancel}
     >
-      <div className="relative hidden h-[100dvh] w-full overflow-hidden desk-wash desk-grain md:block">
-        <div className="relative z-[1] h-full w-full">
+      <DeskSurface className="hidden h-[100dvh] w-full overflow-hidden md:block">
+        <div className="relative z-[2] h-full w-full">
           <DeskObjects />
           <InterviewTray />
           <WindowLayer />
         </div>
-      </div>
+      </DeskSurface>
       <DragOverlay>
         <div className="pointer-events-none opacity-90">
           <ProjectFile style={{ position: "relative", left: 0, top: 0 }} />

@@ -7,6 +7,7 @@ import { getCase } from "@/lib/cases";
 import { AboutBody, WorkFolderBody, ExperimentsFolderBody, CaseBody } from "@/components/case/WindowBodies";
 import { openDeskObject, useWindowStore } from "@/store/windowStore";
 import { spring } from "@/lib/motion";
+import { DeskSurface } from "@/components/desk/DeskSurface";
 
 type Sheet = "work" | "experiments" | "about" | "warm-intake" | null;
 
@@ -23,12 +24,12 @@ export function MobileDesk() {
   ];
 
   return (
-    <div className="relative flex min-h-[100dvh] flex-col desk-wash desk-grain md:hidden">
-      <div className="relative z-[1] flex-1 space-y-3 px-4 pb-28 pt-8">
+    <DeskSurface className="flex min-h-[100dvh] flex-col md:hidden">
+      <div className="relative z-[2] flex-1 space-y-3 px-4 pb-28 pt-8">
         <p className="mb-4 font-display text-[22px] text-ink">Living Desk</p>
         <div
           className="mb-4 rounded-md bg-sticky p-4 font-hand text-[20px] text-graphite"
-          style={{ transform: "rotate(-1deg)", boxShadow: "var(--shadow-paper)" }}
+          style={{ transform: "rotate(-2deg)", boxShadow: "var(--shadow-contact)" }}
         >
           {LABELS.sticky}
         </div>
@@ -40,7 +41,7 @@ export function MobileDesk() {
             className="flex w-full items-center justify-between rounded-md bg-folder px-4 py-4 text-left"
             style={{
               boxShadow:
-                "var(--shadow-paper), inset 0 0 0 1.5px color-mix(in srgb, var(--graphite) 55%, transparent)",
+                "var(--shadow-contact), inset 0 1px 0 rgb(255 255 255 / 55%), inset 0 0 0 1.5px color-mix(in srgb, var(--graphite) 55%, transparent)",
             }}
           >
             <span className="text-[14px] font-medium text-ink">{c.label}</span>
@@ -113,6 +114,6 @@ export function MobileDesk() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </DeskSurface>
   );
 }
