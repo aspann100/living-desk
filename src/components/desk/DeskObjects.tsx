@@ -136,15 +136,16 @@ export function StickyNote({ style }: { style?: React.CSSProperties }) {
 export function DeskObjects() {
   return (
     <>
-      <FolderObject id="work" label={LABELS.folders.work} style={{ left: "12%", top: "18%" }} />
+      {/* Idle composition: stagger so Work/ + Experiments/ aren't buried under About */}
+      <FolderObject id="work" label={LABELS.folders.work} style={{ left: "10%", top: "20%" }} />
       <FolderObject
         id="experiments"
         label={LABELS.folders.experiments}
-        style={{ left: "28%", top: "22%" }}
+        style={{ left: "26%", top: "42%" }}
       />
-      <FolderObject id="about" label={LABELS.folders.about} style={{ left: "44%", top: "16%" }} />
-      <ProjectFile style={{ left: "62%", top: "28%" }} />
-      <StickyNote style={{ left: "72%", top: "52%" }} />
+      <FolderObject id="about" label={LABELS.folders.about} style={{ left: "44%", top: "18%" }} />
+      <ProjectFile style={{ left: "64%", top: "30%" }} />
+      <StickyNote style={{ left: "74%", top: "54%" }} />
     </>
   );
 }
