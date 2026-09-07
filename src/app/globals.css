@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+:root {
+  --desk-oak: #c4a574;
+  --desk-oak-deep: #8b6914;
+  --desk-wash: color-mix(in srgb, var(--desk-oak-deep) 18%, transparent);
+  --paper: #f7f1e8;
+  --paper-raised: #fbf7f0;
+  --folder-cream: #efe6d6;
+  --sticky-manila: #f5e6c8;
+  --ink: #1e3a5f;
+  --ink-muted: #4a5f78;
+  --graphite: #3a3a3a;
+  --graphite-soft: #6b6b6b;
+  --stamp-red: #c45c4a;
+  --stamp-red-soft: color-mix(in srgb, var(--stamp-red) 22%, transparent);
+  --tray-glow: color-mix(in srgb, var(--stamp-red) 35%, transparent);
+  --focus-ring: #1e3a5f;
+  --shadow-paper: 0 1px 2px rgb(30 58 95 / 8%), 0 8px 24px rgb(139 105 20 / 10%);
+}
+
+@theme inline {
+  --color-desk: var(--desk-oak);
+  --color-desk-deep: var(--desk-oak-deep);
+  --color-desk-wash: var(--desk-wash);
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-folder: var(--folder-cream);
+  --color-sticky: var(--sticky-manila);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-graphite: var(--graphite);
+  --color-graphite-soft: var(--graphite-soft);
+  --color-stamp: var(--stamp-red);
+  --color-stamp-soft: var(--stamp-red-soft);
+  --color-tray-glow: var(--tray-glow);
+  --color-focus-ring: var(--focus-ring);
+  --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-source-serif);
+  --font-display: var(--font-fraunces);
+  --font-hand: var(--font-caveat);
+  --shadow-paper: var(--shadow-paper);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--desk-oak);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 14px;
+  overflow: hidden;
+}
+
+/* Subtle paper grain on desk plane only */
+.desk-grain::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  z-index: 0;
+}
+
+.desk-wash {
+  background:
+    linear-gradient(180deg, var(--desk-wash), transparent 55%),
+    var(--desk-oak);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.case-prose h2 {
+  font-family: var(--font-fraunces), serif;
+  font-size: 1.35rem;
+  color: var(--ink);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.case-prose p {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink);
+  margin-bottom: 0.85rem;
+}
+
+.case-prose a {
+  color: var(--stamp-red);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
