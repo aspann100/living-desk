@@ -18,7 +18,6 @@ export function AboutBody() {
         <span className="text-[13px] text-ink">{LABELS.about.resume}</span>
       </div>
       <p className="text-[13px] leading-relaxed text-ink-muted">{LABELS.contact}</p>
-      {/* TODO(aj-disclosure): Aj-approved wording only */}
     </div>
   );
 }

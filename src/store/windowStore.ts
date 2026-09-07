@@ -40,6 +40,30 @@ type WindowState = {
 
 const MAX_OPEN = 3;
 
+const isActivePhase = (phase: WindowPhase) =>
+  phase === "open" || phase === "focused" || phase === "opening";
+
+/** Minimize lowest-z active windows until fewer than `roomFor` slots are free (active < MAX_OPEN - roomFor + 1... → leave room for `incoming` new actives). */
+function withCap(
+  windows: DeskWindow[],
+  incoming = 1,
+  excludeId?: string
+): DeskWindow[] {
+  let next = windows;
+  for (;;) {
+    const active = next
+      .filter((w) => isActivePhase(w.phase) && w.id !== excludeId)
+      .sort((a, b) => a.zIndex - b.zIndex);
+    // After adding `incoming` windows (or restoring excludeId), active count must be ≤ MAX_OPEN
+    if (active.length + incoming <= MAX_OPEN) return next;
+    const oldest = active[0];
+    if (!oldest) return next;
+    next = next.map((w) =>
+      w.id === oldest.id ? { ...w, phase: "minimized" as const } : w
+    );
+  }
+}
+
 const defaults: Record<string, { title: string; kind: WindowKind; slug?: string }> = {
   work: { title: "Work/", kind: "folder" },
   experiments: { title: "Experiments/", kind: "folder" },
@@ -57,16 +81,21 @@ export const useWindowStore = create<WindowState>()(
         const existing = get().windows.find((w) => w.id === partial.id);
         if (existing) {
           if (existing.phase === "minimized" || existing.phase === "closed") {
-            set((s) => ({
-              windows: s.windows.map((w) =>
-                w.id === partial.id
-                  ? { ...w, phase: "opening", zIndex: s.nextZ }
-                  : w.phase === "focused"
-                    ? { ...w, phase: "open" }
-                    : w
+            const z = get().nextZ;
+            const capped = withCap(
+              get().windows.map((w) =>
+                w.phase === "focused" ? { ...w, phase: "open" as const } : w
               ),
-              nextZ: s.nextZ + 1,
-            }));
+              1
+            );
+            set({
+              windows: capped.map((w) =>
+                w.id === partial.id
+                  ? { ...w, phase: "opening" as const, zIndex: z }
+                  : w
+              ),
+              nextZ: z + 1,
+            });
             setTimeout(() => get().setPhase(partial.id, "focused"), 20);
           } else {
             get().focusWindow(partial.id);
@@ -74,23 +103,14 @@ export const useWindowStore = create<WindowState>()(
           return;
         }
 
-        const openCount = get().windows.filter(
-          (w) => w.phase === "open" || w.phase === "focused" || w.phase === "opening"
-        ).length;
-
-        let windows = [...get().windows];
-        if (openCount >= MAX_OPEN) {
-          const oldest = windows
-            .filter((w) => w.phase === "open" || w.phase === "focused")
-            .sort((a, b) => a.zIndex - b.zIndex)[0];
-          if (oldest) {
-            windows = windows.map((w) =>
-              w.id === oldest.id ? { ...w, phase: "minimized" } : w
-            );
-          }
-        }
-
         const z = get().nextZ;
+        const prepared = withCap(
+          get().windows.map((w) =>
+            w.phase === "focused" ? { ...w, phase: "open" as const } : w
+          ),
+          1
+        );
+
         const win: DeskWindow = {
           id: partial.id,
           kind: partial.kind,
@@ -103,12 +123,7 @@ export const useWindowStore = create<WindowState>()(
         };
 
         set({
-          windows: [
-            ...windows.map((w) =>
-              w.phase === "focused" ? { ...w, phase: "open" as const } : w
-            ),
-            win,
-          ],
+          windows: [...prepared, win],
           nextZ: z + 1,
         });
 
@@ -118,23 +133,27 @@ export const useWindowStore = create<WindowState>()(
       },
 
       focusWindow: (id) => {
+        const target = get().windows.find((w) => w.id === id);
+        if (!target) return;
+        const restoring = target.phase === "minimized" || target.phase === "closed";
         const z = get().nextZ;
-        set((s) => ({
-          windows: s.windows.map((w) => {
-            if (w.id === id) {
-              return {
+        let windows = get().windows.map((w) =>
+          w.phase === "focused" ? { ...w, phase: "open" as const } : w
+        );
+        if (restoring) {
+          windows = withCap(windows, 1, id);
+        }
+        windows = windows.map((w) =>
+          w.id === id
+            ? {
                 ...w,
-                phase: w.phase === "minimized" ? "opening" : "focused",
+                phase: restoring ? ("opening" as const) : ("focused" as const),
                 zIndex: z,
-              };
-            }
-            if (w.phase === "focused") return { ...w, phase: "open" };
-            return w;
-          }),
-          nextZ: z + 1,
-        }));
-        const w = get().windows.find((x) => x.id === id);
-        if (w?.phase === "minimized" || get().windows.find((x) => x.id === id)?.phase === "opening") {
+              }
+            : w
+        );
+        set({ windows, nextZ: z + 1 });
+        if (restoring) {
           setTimeout(() => get().setPhase(id, "focused"), 280);
         }
       },
